@@ -1,5 +1,6 @@
 export const I18N={
 bn:{
+newStaff:'নতুন ইউজার যোগ',create:'তৈরি করুন',passMin:'ইমেইল দিন, পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে। (নেট লাগবে)',staffCreated:'ইউজার তৈরি হয়েছে।\nইমেইল: {e}\nপাসওয়ার্ড: {p}\nএগুলো কর্মচারীকে দিন।',resetMail:'পাসওয়ার্ড রিসেট মেইল',mailSent:'রিসেট মেইল পাঠানো হয়েছে',removeAccess:'অ্যাক্সেস বন্ধ',removeConfirm:'{n}-এর অ্যাক্সেস বন্ধ করবেন? সে আর অ্যাপে ঢুকতে পারবে না।',removed:'অ্যাক্সেস বন্ধ হয়েছে',
 shopName:'জুয়েল এন্টারপ্রাইজ',shopAddr:'বিসমিল্লা কমপ্লেক্স, ইউনিয়ন পরিষদের সামনে, ডিমলা, নীলফামারী',
 language:'ভাষা',theme:'থিম',email:'ইমেইল',password:'পাসওয়ার্ড',login:'লগইন',logout:'বের হোন',loginFail:'ইমেইল বা পাসওয়ার্ড ভুল (প্রথমবার নেট লাগে)',
 noRole:'পদ ঠিক করা হয়নি',giveUid:'মালিককে এই UID দিন:',offline:'🔴 অফলাইন',syncWait:'🟡 সিঙ্ক অপেক্ষায়',synced:'🟢 সিঙ্ক হয়েছে',
@@ -20,10 +21,11 @@ addEntry:'আয়/ব্যয় এন্ট্রি',category:'ব্য�
 salesReport:'বিক্রয় রিপোর্ট',totalSale:'মোট বিক্রয়',prodWise:'পণ্যভিত্তিক বিক্রি',profitBeforeDisc:'লাভ (ডিসকাউন্টের আগে)',costUnknown:'{n}টি আইটেমের ক্রয়দাম পাওয়া যায়নি, সেগুলোর খরচ ০ ধরা হয়েছে।',
 pickProdHint:'পণ্য বেছে নিন',stockIn:'স্টক ইন',stockOut:'স্টক আউট',type:'ধরন',reason:'কারণ',rs_sale:'বিক্রি','rs_memo-edit':'মেমো এডিট','rs_memo-delete':'মেমো ডিলিট','rs_stock-add':'স্টক যোগ',rs_adjust:'সমন্বয়',
 todaySale:'আজকের বিক্রয়',customers:'কাস্টমার',products:'পণ্য',lowStock:'কম স্টক (১০-এর নিচে)',
-sellerRules:'বিক্রেতার সীমা',sellerPrice:'বিক্রেতা মেমোতে দাম বদলাতে পারবে',sellerMaxDisc:'বিক্রেতার সর্বোচ্চ ডিসকাউন্ট (%)',sellerMaxHint:'০ দিলে বিক্রেতা ডিসকাউন্ট দিতে পারবে না।',defPaper:'ডিফল্ট প্রিন্টের সাইজ',employees:'কর্মচারী অ্যাকাউন্ট',name:'নাম',role:'পদ',owner:'মালিক',seller:'বিক্রেতা',empHint:'নতুন কর্মচারী যোগ করতে Firebase Console-এ ইউজার বানিয়ে users/{uid} ডকুমেন্টে role দিন।',
+sellerRules:'বিক্রেতার সীমা',sellerPrice:'বিক্রেতা মেমোতে দাম বদলাতে পারবে',sellerMaxDisc:'বিক্রেতার সর্বোচ্চ ডিসকাউন্ট (%)',sellerMaxHint:'০ দিলে বিক্রেতা ডিসকাউন্ট দিতে পারবে না।',defPaper:'ডিফল্ট প্রিন্টের সাইজ',employees:'কর্মচারী অ্যাকাউন্ট',name:'নাম',role:'পদ',owner:'মালিক',seller:'বিক্রেতা',empHint:'অ্যাক্সেস বন্ধ করলে ইউজার আর ঢুকতে পারবে না। অ্যাকাউন্ট পুরোপুরি মুছতে Firebase Console → Authentication ব্যবহার করুন।',
 importOld:'পুরনো ডেটা ইম্পোর্ট',importHint:'আগের অ্যাপ থেকে এক্সপোর্ট করা .json ফাইল দিন। (নেট লাগবে)',backup:'ব্যাকআপ এক্সপোর্ট',download:'ডাউনলোড',needNet:'ইম্পোর্টের জন্য ইন্টারনেট দরকার',badFile:'ফাইলটি সঠিক নয়',importConfirm:'{m}টি মেমো, {c} কাস্টমার, {p} পণ্য, {a} হিসাব এন্ট্রি ইম্পোর্ট হবে। চালিয়ে যাবেন?',importDone:'ইম্পোর্ট সম্পন্ন ✔'
 },
 en:{
+newStaff:'Add new user',create:'Create',passMin:'Enter an email; password must be at least 6 characters. (internet needed)',staffCreated:'User created.\nEmail: {e}\nPassword: {p}\nGive these to the staff member.',resetMail:'Password reset mail',mailSent:'Reset mail sent',removeAccess:'Remove access',removeConfirm:'Remove access for {n}? They will no longer be able to use the app.',removed:'Access removed',
 shopName:'Jewel Enterprise',shopAddr:'Bismillah Complex, in front of Union Parishad, Dimla, Nilphamari',
 language:'Language',theme:'Theme',email:'Email',password:'Password',login:'Login',logout:'Logout',loginFail:'Wrong email or password (internet needed the first time)',
 noRole:'Role not assigned',giveUid:'Give this UID to the owner:',offline:'🔴 Offline',syncWait:'🟡 Waiting to sync',synced:'🟢 Synced',
@@ -44,6 +46,6 @@ addEntry:'Income / expense entry',category:'Expense category',income:'Income',ex
 salesReport:'Sales report',totalSale:'Total sales',prodWise:'Sales by product',profitBeforeDisc:'Profit (before discount)',costUnknown:'{n} items had no purchase price; their cost is counted as 0.',
 pickProdHint:'Select a product',stockIn:'Stock in',stockOut:'Stock out',type:'Type',reason:'Reason',rs_sale:'Sale','rs_memo-edit':'Memo edit','rs_memo-delete':'Memo delete','rs_stock-add':'Stock added',rs_adjust:'Adjustment',
 todaySale:"Today's sales",customers:'Customers',products:'Products',lowStock:'Low stock (below 10)',
-sellerRules:'Seller limits',sellerPrice:'Seller can change price on memo',sellerMaxDisc:'Seller max discount (%)',sellerMaxHint:'0 means sellers cannot give a discount.',defPaper:'Default print size',employees:'Staff accounts',name:'Name',role:'Role',owner:'Owner',seller:'Seller',empHint:'To add staff, create the user in Firebase Console and set role in the users/{uid} document.',
+sellerRules:'Seller limits',sellerPrice:'Seller can change price on memo',sellerMaxDisc:'Seller max discount (%)',sellerMaxHint:'0 means sellers cannot give a discount.',defPaper:'Default print size',employees:'Staff accounts',name:'Name',role:'Role',owner:'Owner',seller:'Seller',empHint:'Removing access stops the user from using the app. To delete the account fully, use Firebase Console → Authentication.',
 importOld:'Import old data',importHint:'Choose the .json exported from the old app. (needs internet)',backup:'Backup export',download:'Download',needNet:'Internet is required for import',badFile:'Invalid file',importConfirm:'Will import {m} memos, {c} customers, {p} products, {a} accounting entries. Continue?',importDone:'Import complete ✔'
 }};
