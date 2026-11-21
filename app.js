@@ -1,9 +1,10 @@
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import{getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut,createUserWithEmailAndPassword,sendPasswordResetEmail}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import{initializeFirestore,persistentLocalCache,persistentMultipleTabManager,collection,doc,getDoc,setDoc,onSnapshot,writeBatch,increment}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import{I18N}from'./i18n.js';
 
-const app=initializeApp({apiKey:"AIzaSyAgdFETZbQl2ZtITMLXUNGqKLqHKPiaktc",authDomain:"memo-bb729.firebaseapp.com",projectId:"memo-bb729",storageBucket:"memo-bb729.firebasestorage.app",messagingSenderId:"189375964705",appId:"1:189375964705:web:756a542e63adaf3aac2560",measurementId:"G-C3XFE12SMH"});
+const FB={apiKey:"AIzaSyAgdFETZbQl2ZtITMLXUNGqKLqHKPiaktc",authDomain:"memo-bb729.firebaseapp.com",projectId:"memo-bb729",storageBucket:"memo-bb729.firebasestorage.app",messagingSenderId:"189375964705",appId:"1:189375964705:web:756a542e63adaf3aac2560",measurementId:"G-C3XFE12SMH"};
+const app=initializeApp(FB),auth2=getAuth(initializeApp(FB,"sec")); // auth2: নতুন ইউজার বানানোর সময় মালিক যাতে লগআউট না হন
 const auth=getAuth(app),db=initializeFirestore(app,{localCache:persistentLocalCache({tabManager:persistentMultipleTabManager()})});
 const SHOP_M='01711472098',SHOP_E='jepdimla98@gmail.com';
 
@@ -277,10 +278,25 @@ function dashView(){const s=memos.reduce((a,m)=>a+(+m.grandTotal||0),0),d=memos.
 function setView(){
   $('#main').innerHTML=`<div class=card><h3>${t('sellerRules')}</h3><label class=chk><input type=checkbox id=sp1 ${S.sellerPriceEdit?'checked':''}> ${t('sellerPrice')}</label><br><label>${t('sellerMaxDisc')}<input id=sd type=number min=0 max=100 step=any value="${esc(S.sellerMaxDiscount||0)}"></label><p><small>${t('sellerMaxHint')}</small></p><div class=act><button class=b1 id=ssv>${t('saveBtn')}</button></div></div>
   <div class=card><h3>${t('defPaper')}</h3><select id=dpf><option value=a4>A4</option><option value=f80>${t('thermal')} 80mm</option><option value=f58>${t('thermal')} 58mm</option></select></div>
+  <div class=card><h3>${t('newStaff')}</h3><div class=g><label>${t('name')}<input id=un></label><label>${t('role')}<select id=ur><option value=seller>${t('seller')}</option><option value=owner>${t('owner')}</option></select></label><label>${t('email')}<input id=ue type=email autocomplete=off></label><label>${t('password')}<input id=up type=text autocomplete=off></label></div><p><small>${t('passMin')}</small></p><div class=act><button class=b1 id=ucr>${t('create')}</button></div></div>
   <div class=card><h3>${t('employees')}</h3><div id=emp></div><p><small>${t('empHint')}</small></p></div>`;
   $('#dpf').value=fmtPref();$('#dpf').onchange=()=>localStorage.setItem('jp_fmt',$('#dpf').value);
-  $('#ssv').onclick=()=>{const v=Math.min(100,Math.max(0,+$('#sd').value||0));setDoc(doc(db,'settings','app'),{sellerPriceEdit:$('#sp1').checked,sellerMaxDiscount:v},{merge:true}).catch(e=>alert(e.message));toast(t('saved'))};empList()}
-function empList(){const e=$('#emp');if(!e)return;e.innerHTML=`<div class=ov><table><tr><th>${t('name')}<th>${t('role')}<th>UID</tr>${users.map(u=>`<tr><td>${esc(u.name||u.email||'—')}<td>${esc(u.role==='owner'?t('owner'):u.role==='seller'?t('seller'):u.role)}<td><small>${esc(u.id)}</small>`).join('')}</table></div>`}
+  $('#ssv').onclick=()=>{const v=Math.min(100,Math.max(0,+$('#sd').value||0));setDoc(doc(db,'settings','app'),{sellerPriceEdit:$('#sp1').checked,sellerMaxDiscount:v},{merge:true}).catch(e=>alert(e.message));toast(t('saved'))};
+  $('#ucr').onclick=createStaff;
+  $('#emp').onclick=async e=>{const b=e.target.closest('[data-u]');if(!b)return;const u=users.find(x=>x.id===b.dataset.u);if(!u)return;
+    if(b.dataset.a==='r'){if(!navigator.onLine)return alert(t('needNet'));try{await sendPasswordResetEmail(auth,u.email);toast(t('mailSent'))}catch(x){alert(x.message)}}
+    else if(b.dataset.a==='d'&&confirm(t('removeConfirm',{n:u.name||u.email||u.id}))){const w=writeBatch(db);w.delete(doc(db,'users',u.id));w.commit().catch(x=>alert(x.message));toast(t('removed'))}};
+  empList()}
+async function createStaff(){
+  const name=$('#un').value.trim(),email=$('#ue').value.trim(),pw=$('#up').value,r=$('#ur').value;
+  if(!navigator.onLine)return alert(t('needNet'));
+  if(!email||pw.length<6)return alert(t('passMin'));
+  const bt=$('#ucr');bt.disabled=true;
+  try{const c=await createUserWithEmailAndPassword(auth2,email,pw);const id=c.user.uid;await signOut(auth2);
+    await setDoc(doc(db,'users',id),{role:r,name,email,createdBy:user.uid,createdAt:Date.now()});
+    $('#un').value=$('#ue').value=$('#up').value='';alert(t('staffCreated',{e:email,p:pw}))}
+  catch(e){alert(t('failed')+e.message)}finally{bt.disabled=false}}
+function empList(){const e=$('#emp');if(!e)return;e.innerHTML=`<div class=ov><table><tr><th>${t('name')}<th>${t('email')}<th>${t('role')}<th></tr>${users.map(u=>`<tr><td>${esc(u.name||'—')}<td>${esc(u.email||'—')}<td>${esc(u.role==='owner'?t('owner'):u.role==='seller'?t('seller'):u.role)}<td class=nw>${u.email?`<button class=x data-a=r data-u="${esc(u.id)}">${t('resetMail')}</button> `:''}${u.id!==user.uid?`<button class="x dl" data-a=d data-u="${esc(u.id)}">${t('removeAccess')}</button>`:''}`).join('')}</table></div>`}
 
 /* ---------- ডেটা ---------- */
 function dataView(){$('#main').innerHTML=`<div class=card><h3>${t('importOld')}</h3><p>${t('importHint')}</p><input type=file id=f accept=".json"></div><div class=card><h3>${t('backup')}</h3><button class=b3 id=ex>${t('download')}</button></div>`;
