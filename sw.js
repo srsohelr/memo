@@ -1,6 +1,8 @@
-const C='jewel-v2',A=['./','index.html','app.js','i18n.js','manifest.json','logo.jpg','icon-192.png','icon-512.png','lib/jspdf.umd.min.js','lib/html2canvas.min.js'];
+const C='jewel-v2',CORE=['./','index.html','app.js','i18n.js'],MORE=['manifest.json','logo.jpg','icon-192.png','icon-512.png','lib/jspdf.umd.min.js','lib/html2canvas.min.js'];
+// মূল ফাইল না পেলে ইনস্টল ব্যর্থ হবে; বাকি ফাইল (লোগো, আইকন, PDF লাইব্রেরি) না থাকলেও সার্ভিস ওয়ার্কার চালু হবে
+const get=(c,u)=>fetch(new Request(u,{cache:'reload'})).then(r=>{if(!r.ok)throw 0;return c.put(u,r)});
 self.addEventListener('install',e=>e.waitUntil(
-  caches.open(C).then(c=>c.addAll(A.map(u=>new Request(u,{cache:'reload'}))))
+  caches.open(C).then(c=>Promise.all(CORE.map(u=>get(c,u))).then(()=>Promise.all(MORE.map(u=>get(c,u).catch(()=>0)))))
   // v1 থেকে প্রথমবার আপগ্রেডে (v1-এ আপডেট বার্তা নেই) নিজে চালু হবে; এরপর থেকে ব্যবহারকারী "আপডেট করুন" চাপলে
   .then(()=>caches.keys()).then(k=>{if(k.includes('jewel-v1'))return self.skipWaiting()})));
 self.addEventListener('message',e=>{if(e.data&&e.data.type==='SKIP_WAITING')self.skipWaiting()});
