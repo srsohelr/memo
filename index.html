@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#4f46e5"><title>জুয়েল এন্টারপ্রাইজ</title><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png">
+<script>try{var th=localStorage.getItem('jp_theme');if(!th)th=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=th;document.documentElement.lang=localStorage.getItem('jp_lang')||'bn'}catch(e){}</script>
+<style>
+:root{--bg:#eef2f6;--card:#fff;--tx:#1f2937;--mut:#64748b;--bd:#cbd5e1;--ro:#f1f5f9;--pri:#4f46e5;--hl:#eef2ff;--line:#e5e7eb;--warn:#fef3c7;--xbg:#fee2e2;--err:#dc2626;--gin:#16a34a}
+[data-theme=dark]{--bg:#0f172a;--card:#1e293b;--tx:#e2e8f0;--mut:#94a3b8;--bd:#475569;--ro:#334155;--pri:#818cf8;--hl:#312e81;--line:#334155;--warn:#422006;--xbg:#450a0a;--err:#f87171;--gin:#4ade80}
+*{box-sizing:border-box}body{margin:0;font-family:'Noto Sans Bengali',Inter,system-ui,sans-serif;background:var(--bg);color:var(--tx)}
+header{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#4f46e5;color:#fff;position:sticky;top:0;z-index:5}[data-theme=dark] header{background:#1e1b4b}header img{width:34px;height:34px;border-radius:50%}header b{flex:1}header span{font-size:12px}header button,.login-tools button{background:#fff3;color:#fff;border:0;border-radius:6px;padding:6px 10px}
+.login-tools{text-align:right;padding:8px}.login-tools button{background:#4f46e5}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;overflow-x:auto;background:var(--card);border-top:1px solid var(--line);z-index:5}nav button{flex:1 0 auto;min-width:64px;padding:10px 6px;border:0;background:none;color:var(--tx);font-size:12px;white-space:nowrap}nav button.on{color:var(--pri);font-weight:700;background:var(--hl)}
+main{padding:12px 12px 80px;max-width:900px;margin:auto}
+@media(min-width:900px){nav{top:50px;right:auto;width:170px;flex-direction:column;justify-content:flex-start;border-right:1px solid var(--line);border-top:0;overflow-y:auto}nav button{text-align:left;padding:14px;font-size:15px;flex:0 0 auto}main{margin-left:190px;max-width:none}}
+.card{background:var(--card);border-radius:12px;padding:12px;margin-bottom:12px;box-shadow:0 1px 4px #0002}.warn{background:var(--warn)}.g{display:grid;grid-template-columns:1fr 1fr;gap:8px}.w{grid-column:1/-1}
+label{font-size:13px;display:block}.chk{display:flex;gap:8px;align-items:center}.chk input{width:auto}
+input,select{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;font:inherit;background:var(--card);color:var(--tx)}input[readonly]{background:var(--ro)}
+.row{display:grid;grid-template-columns:3fr 1fr 1.2fr 1.2fr auto;gap:4px;align-items:center;margin-bottom:6px}.row small{grid-column:1/-1;color:var(--mut)}
+button{font:inherit;cursor:pointer}.b1,.b2,.b3{border:0;border-radius:8px;padding:10px 14px;color:#fff}.b1{background:#16a34a}.b2{background:#64748b}.b3{background:#4f46e5}button:disabled{opacity:.5}
+.x{border:0;background:var(--xbg);color:var(--tx);border-radius:6px;padding:6px 9px}.nw{white-space:nowrap}
+.act{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.tot{line-height:1.8}.err{color:var(--err)}.gin{color:var(--gin);font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:6px;border-bottom:1px solid var(--line);text-align:left}.ov{overflow-x:auto}.low{color:var(--err);font-weight:700}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:8px}.stat div{background:var(--hl);border-radius:10px;padding:12px}.stat b{font-size:20px;display:block}
+.toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:8px;z-index:30}
+.login{max-width:340px;margin:8vh auto;padding:16px}
+#upd{position:fixed;top:0;left:0;right:0;z-index:40;background:#f59e0b;color:#000;padding:8px 12px;display:flex;gap:10px;align-items:center;justify-content:center}
+#modal{position:fixed;inset:0;background:#0008;z-index:25;display:flex;align-items:center;justify-content:center;padding:12px}.mbox{background:var(--card);border-radius:12px;padding:16px;width:100%;max-width:380px}
+/* মেমো (প্রিন্ট ও PDF) */
+#print{display:none}.pdfhost{position:fixed;left:-10000px;top:0;background:#fff}
+.mm{background:#fff;color:#000;font-family:'Noto Sans Bengali',Inter,system-ui,sans-serif;font-size:13px;padding:24px}.mm *{color:#000}
+.mm .mh{text-align:center}.mm .mh img{height:70px;border-radius:50%}.mm h2{margin:4px 0}.mm table{width:100%;border-collapse:collapse}.mm td,.mm th{border-bottom:1px solid #999;padding:4px;font-size:inherit}.mm .tr{text-align:right}.mm .sg{display:flex;justify-content:space-between;margin-top:40px}
+.mm.f80{font-size:11px;padding:6px}.mm.f80 .mh img{height:44px}.mm.f80 h2{font-size:15px}.mm.f80 .sg{margin-top:24px}
+.mm.f58{font-size:9.5px;padding:3px}.mm.f58 .mh img{height:34px}.mm.f58 h2{font-size:12px}.mm.f58 td,.mm.f58 th{padding:2px 1px}.mm.f58 .sg{margin-top:18px;font-size:8px}
+@media print{body{background:#fff}body>*:not(#print){display:none!important}#print{display:block}#print,#print *{color:#000!important;background:transparent}#print .mm{padding:0}#print table{width:100%}}
+</style><style id="pgstyle"></style></head><body><div id="app"></div><div id="print"></div>
+<script type="module" src="app.js"></script></body></html>

@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+    function signed() { return request.auth != null && exists(/databases/$(db)/documents/users/$(request.auth.uid)); }
+    function owner()  { return signed() && get(/databases/$(db)/documents/users/$(request.auth.uid)).data.role == 'owner'; }
+    // বিক্রেতার সর্বোচ্চ ডিসকাউন্ট % (settings/app না থাকলে ০)
+    function maxDisc() {
+      return exists(/databases/$(db)/documents/settings/app)
+        ? get(/databases/$(db)/documents/settings/app).data.get('sellerMaxDiscount', 0) : 0;
+    }
+
+    match /users/{u} {
+      allow read: if request.auth != null && (request.auth.uid == u || owner());
+      allow write: if false;
+    }
+    match /settings/{id} {
+      allow read: if signed();
+      allow write: if owner();
+    }
+    match /products/{id} {
+      allow read: if signed();
+      allow create, delete: if owner();
+      allow update: if owner() || (signed() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['currentStock']));
+    }
+    match /customers/{id} {
+      allow read, create: if signed();
+      allow update, delete: if owner();
+    }
+    match /memos/{id} {
+      // বিক্রেতা শুধু নতুন মেমো বানাতে পারবে, ডিসকাউন্ট সীমার মধ্যে
+      allow create: if owner() || (signed()
+        && (request.resource.data.subTotal - request.resource.data.grandTotal) <= request.resource.data.subTotal * maxDisc() / 100 + 0.01);
+      allow read, update, delete: if owner();
+    }
+    match /stockLog/{id} {
+      // বিক্রেতা শুধু বিক্রির "আউট" এন্ট্রি লিখতে পারবে (এডিট/মোছা নয়)
+      allow create: if owner() || (signed() && request.resource.data.type == 'out' && request.resource.data.reason == 'sale');
+      allow read, update, delete: if owner();
+    }
+    match /memoLog/{id} {
+      // মেমো এডিট/ডিলিটের অডিট লগ: মালিক পড়তে ও লিখতে পারবে, বদলাতে/মুছতে পারবে না
+      allow read, create: if owner();
+      allow update, delete: if false;
+    }
+    match /{col}/{id} {
+      allow read, write: if owner() && col in ['costs', 'accounting'];
+    }
+  }
+}
